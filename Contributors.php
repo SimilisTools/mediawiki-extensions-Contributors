@@ -27,7 +27,7 @@ $wgExtensionMessagesFiles['Contributors'] = $dir . 'Contributors.i18n.php';
 $wgExtensionMessagesFiles['ContributorsAlias'] = $dir . 'Contributors.alias.php';
 $wgExtensionMessagesFiles['ContributorsMagic'] = $dir . 'Contributors.i18n.magic.php';
 $wgAutoloadClasses['SpecialContributors'] = $dir . 'Contributors.page.php';
-$wgAutoloadClasses['ContributorsParser'] = $dir . 'Contributors.parse.php';
+$wgAutoloadClasses['ContributorsParser'] = $dir . 'Contributors.parser.php';
 $wgSpecialPages['Contributors'] = 'SpecialContributors';
 $wgSpecialPageGroups['Contributors'] = 'pages';
 
