@@ -25,7 +25,9 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Contributors'] = $dir . 'Contributors.i18n.php';
 $wgExtensionMessagesFiles['ContributorsAlias'] = $dir . 'Contributors.alias.php';
+$wgExtensionMessagesFiles['ContributorsMagic'] = $dir . 'Contributors.i18n.magic.php';
 $wgAutoloadClasses['SpecialContributors'] = $dir . 'Contributors.page.php';
+$wgAutoloadClasses['ContributorsParser'] = $dir . 'Contributors.parse.php';
 $wgSpecialPages['Contributors'] = 'SpecialContributors';
 $wgSpecialPageGroups['Contributors'] = 'pages';
 
@@ -34,6 +36,11 @@ $wgHooks['ArticleSaveComplete'][] = 'efContributorsInvalidateCache';
 # Good god, this is ludicrous!
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'efContributorsNavigation';
 $wgHooks['SkinTemplateToolboxEnd'][] = 'efContributorsToolbox';
+
+#New Hooks
+#http://www.mediawiki.org/wiki/Manual:Parser_functions
+$wgHooks['ParserFirstCallInit'][] = 'renderParser';
+
 
 /**
  * Intelligent cut-off limit; see below
@@ -45,6 +52,19 @@ $wgContributorsLimit = 10;
  * number of edits to a page won't be listed in normal or inclusion lists
  */
 $wgContributorsThreshold = 2;
+
+
+
+// Hook our callback function into the parser
+function renderParser( $parser ) {
+	// When the parser sees the {{#ifcontribsin:}} function, it executes 
+	// the printFunction function (see below)
+	$parser->setFunctionHook( 'ifcontribsin', 'ContributorsParser::ifContribsIn', SFH_OBJECT_ARGS );
+	// Always return true from this function. The return value does not denote
+	// success or otherwise have meaning - it just must always be true.
+	return true;
+}
+
 
 /**
  * Invalidate the cache we saved for a given title
