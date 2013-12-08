@@ -23,11 +23,12 @@ class ContributorsParser {
 		// By default, let's take current title
 		$title = $parser->getTitle();
 
-		if ( isset( $args[0] ) {
+		if ( isset( $args[0] ) ) {
 		
-			$titleText = $parser->recursiveTagParse( trim( $args[0] ) );
+			$titleText = trim( $frame->expand( $args[0] ) );
 			
 			if ( !empty( $titleText ) ) {
+				echo $titleText;
 				$title = Title::newFromText( $titleText );
 			}
 			
@@ -35,7 +36,7 @@ class ContributorsParser {
 		
 		if ( isset( $args[1] ) ) {
 		
-			$groupstr = $parser->recursiveTagParse( trim( $args[1] ) );
+			$groupstr = trim( $frame->expand( $args[1] ) );
 		
 			if ( !empty( $groupstr ) ) { 
 				
